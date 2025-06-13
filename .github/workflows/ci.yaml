@@ -38,6 +38,8 @@ jobs:
 
       - name: Install dependencies using compose
         run: composer install
+        env:
+          COMPOSER_NO_INTERACTION: 1
 
       - name: Install Node.js
         uses: actions/setup-node@v4
