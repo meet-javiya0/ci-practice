@@ -21,8 +21,8 @@ jobs:
         run: rm composer.lock
 
       # check
-      - name: update compose
-        run: composer update
+      # - name: update compose
+      #   run: composer update
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
@@ -52,4 +52,4 @@ jobs:
         run: npm run build
 
       - name: Run tests
-        run: ./vendor/bin/phpunit
+        run: ./vendor/bin/pest
