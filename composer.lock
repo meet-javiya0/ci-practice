@@ -8608,7 +8608,7 @@
                     "Symfony\\Contracts\\Service\\": ""
                 },
                 "exclude-from-classmap": [
-                    "/Test/"
+                    "/Tests/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -8868,7 +8868,7 @@
                     "Symfony\\Contracts\\Translation\\": ""
                 },
                 "exclude-from-classmap": [
-                    "/Test/"
+                    "/Tests/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
