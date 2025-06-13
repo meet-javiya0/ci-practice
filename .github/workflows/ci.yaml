@@ -37,7 +37,7 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install dependencies using compose
-        run: composer install --optimize-autoloader --no-dev
+        run: composer install
 
       - name: Install Node.js
         uses: actions/setup-node@v4
