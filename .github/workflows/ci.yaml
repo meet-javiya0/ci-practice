@@ -17,6 +17,9 @@ jobs:
         with:
           php-version: "8.3"
 
+      - name: update compose
+        run: composer update
+
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
@@ -29,7 +32,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Install dependencies
+      - name: Install dependencies using compose
         run: composer install --optimize-autoloader --no-dev
 
       - name: Install Node.js
