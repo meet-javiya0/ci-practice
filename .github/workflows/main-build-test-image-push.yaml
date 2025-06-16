@@ -55,7 +55,7 @@ jobs:
           npm install @babel/eslint-parser @eslint/eslintrc eslint-config-standard --save-dev
 
       - name: Run lint checking
-        run: npm run lint:fix
+        run: npm run lint
 
       - name: Build app using npm
         run: npm run build
