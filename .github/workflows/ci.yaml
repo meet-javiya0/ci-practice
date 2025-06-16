@@ -62,7 +62,7 @@ jobs:
           COMPOSER_NO_INTERACTION: 1
 
       - name: Run PHPStan for linting
-        run: ./vendor/bin/phpstan analyse
+        run: vendor/bin/phpstan analyse
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
