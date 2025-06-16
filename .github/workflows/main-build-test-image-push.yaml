@@ -49,8 +49,11 @@ jobs:
       - name: Install npm packages
         run: npm install
 
+      - name: add eslint
+        run: npm install eslint --save-dev && npm install @babel/eslint-parser @eslint/eslintrc eslint-config-standard --save-dev
+
       - name: run lint checking
-        run: npm run lint
+        run: npm run lint:fix
 
       - name: Build app using npm
         run: npm run build
