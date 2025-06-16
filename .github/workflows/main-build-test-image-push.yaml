@@ -11,6 +11,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /app/database/database.sqlite
+      DB_FOREIGN_KEYS: true
+
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v4
@@ -65,6 +70,11 @@ jobs:
 
       - name: Generate app key
         run: php artisan key:generate
+
+      - name: Create SQLite database file
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
 
       # check
       - name: Run database migrations
