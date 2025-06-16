@@ -25,8 +25,6 @@ test('api token permissions can be updated', function () {
         ],
     ]);
 
-    dump($user->fresh()->tokens->first()->abilities);
-
     expect($user->fresh()->tokens->first())
         ->can('delete')->toBeFalse()
         ->can('read')->toBeFalse()

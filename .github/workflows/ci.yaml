@@ -1,4 +1,4 @@
-name: Continuous Integration practice
+name: Servas CI
 
 on:
   pull_request:
@@ -75,6 +75,9 @@ jobs:
 
       - name: Copy .env
         run: cp .env.example .env
+
+      - name: Run PHPStan for linting
+        run: ./vendor/bin/phpstan analyse
 
       - name: Generate app key
         run: php artisan key:generate
