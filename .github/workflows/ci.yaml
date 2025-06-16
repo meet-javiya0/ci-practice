@@ -20,8 +20,8 @@ jobs:
         ports: ["3306:3306"]
         options: >-
           --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
+          --health-interval=3s
+          --health-timeout=3s
           --health-retries=3
 
     env:
@@ -31,6 +31,7 @@ jobs:
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: root
+      SERVAS_ENABLE_REGISTRATION: true
 
     steps:
       - name: Checkout the repo
