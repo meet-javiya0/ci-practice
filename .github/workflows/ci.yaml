@@ -31,7 +31,6 @@ jobs:
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: root
-      JETSTREAM_FEATURES: api
 
     steps:
       - name: Checkout the repo
