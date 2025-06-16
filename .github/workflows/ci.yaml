@@ -82,3 +82,6 @@ jobs:
 
       - name: Run tests
         run: ./vendor/bin/pest --migrate-configuration
+
+      - name: Run tests
+        run: ./vendor/bin/pest
