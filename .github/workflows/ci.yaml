@@ -82,9 +82,5 @@ jobs:
       - name: Run database migrations
         run: php artisan migrate
 
-      - name: checking
-        run: php artisan tinker \
-          User::first()->tokens->first()->abilities
-
       - name: Run tests
         run: ./vendor/bin/pest
