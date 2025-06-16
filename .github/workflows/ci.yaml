@@ -81,4 +81,4 @@ jobs:
           DB_PASSWORD: root
 
       - name: Run tests
-        run: ./vendor/bin/pest
+        run: ./vendor/bin/pest --migrate-configuration
