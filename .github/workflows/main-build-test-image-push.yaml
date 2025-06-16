@@ -71,17 +71,9 @@ jobs:
       - name: Generate app key
         run: php artisan key:generate
 
-      - name: Create SQLite database file
-        run: |
-          mkdir -p database
-          touch database/database.sqlite
-
-      - name: Clear config cache
-        run: php artisan config:clear
-
       # check
-      - name: Run database migrations
-        run: php artisan migrate
+      # - name: Run database migrations
+      #   run: php artisan migrate
 
       - name: Run tests
         run: ./vendor/bin/pest
