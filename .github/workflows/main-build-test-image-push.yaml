@@ -67,8 +67,8 @@ jobs:
         run: php artisan key:generate
 
       # check
-      # - name: Run database migrations
-      #   run: php artisan migrate
+      - name: Run database migrations
+        run: php artisan migrate
 
       - name: Run tests
         run: ./vendor/bin/pest
