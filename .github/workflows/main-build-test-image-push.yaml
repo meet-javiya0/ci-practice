@@ -73,8 +73,8 @@ jobs:
 
       - name: Create SQLite database file
         run: |
-          mkdir -p database
-          touch database/database.sqlite
+          mkdir -p /app/database
+          touch /app/database/database.sqlite
 
       # check
       - name: Run database migrations
