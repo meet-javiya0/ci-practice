@@ -73,8 +73,11 @@ jobs:
 
       - name: Create SQLite database file
         run: |
-          mkdir -p /app/database
-          touch /app/database/database.sqlite
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Clear config cache
+        run: php artisan config:clear
 
       # check
       - name: Run database migrations
