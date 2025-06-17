@@ -84,6 +84,7 @@ jobs:
     name: Build and Push Docker Image
     needs: build-and-test
     runs-on: ubuntu-latest
+    if: success()
 
     steps:
       - name: Checkout code
