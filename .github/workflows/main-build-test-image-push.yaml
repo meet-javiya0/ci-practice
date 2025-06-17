@@ -91,7 +91,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/servas
           tags: |
-            type=raw,value={{branch}}-{{sha}}-${{date EPOCH}}
+            type=raw,value={{branch}}-{{sha}}-${{date epoch}}
         env:
           DOCKER_METADATA_SHORT_SHA_LENGTH: 7
 
