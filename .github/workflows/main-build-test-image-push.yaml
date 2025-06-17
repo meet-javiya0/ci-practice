@@ -108,13 +108,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Cache Docker layers
-        uses: actions/cache@v4
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-docker-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-docker-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-docker-
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -122,3 +122,5 @@ jobs:
           context: .
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
           tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache,mode=max
