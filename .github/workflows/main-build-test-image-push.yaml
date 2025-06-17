@@ -120,7 +120,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && success() }}
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache,mode=max
