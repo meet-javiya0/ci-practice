@@ -84,7 +84,6 @@ jobs:
     name: Build and Push Docker Image
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/main' && success())
 
     steps:
       - name: Checkout code
@@ -99,9 +98,7 @@ jobs:
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/servas
           tags: |
-            type=ref,event=branch
-            type=sha,format=short
-            type=raw,value={{date 'X'}}
+            type=raw,value={{branch}}-{{sha}}-{{date 'X'}}
         env:
           DOCKER_METADATA_SHORT_SHA_LENGTH: 7
 
@@ -111,9 +108,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: true
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && success() }}
           tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache,mode=max
