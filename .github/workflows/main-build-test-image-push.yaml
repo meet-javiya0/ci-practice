@@ -52,14 +52,6 @@ jobs:
           node-version: 22
           cache: "npm"
 
-      # - name: Cache npm dependencies
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
       - name: Install npm packages
         run: npm install
 
@@ -108,13 +100,13 @@ jobs:
           username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Cache Docker layers
-        uses: actions/cache@v4
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
-          restore-keys: |
-            ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-docker-
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -122,5 +114,5 @@ jobs:
           context: .
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          # cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-to: type=local,dest=/tmp/.buildx-cache
