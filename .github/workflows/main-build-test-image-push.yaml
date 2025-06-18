@@ -39,7 +39,7 @@ jobs:
           path: vendor
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
-            ${{ runner.os }}-php-
+            ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
 
       - name: Install dependencies using compose
         run: composer install
@@ -51,14 +51,6 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
-
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
       - name: Install npm packages
         run: npm install
@@ -84,7 +76,6 @@ jobs:
     name: Build and Push Docker Image
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: success()
 
     steps:
       - name: Checkout code
@@ -94,28 +85,28 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Docker metadata
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main')
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/servas
+          images: ${{ vars.DOCKER_USERNAME }}/servas
           tags: |
             type=raw,value={{branch}}-{{sha}}-{{date 'X'}}
-        env:
-          DOCKER_METADATA_SHORT_SHA_LENGTH: 7
 
       - name: Login to Docker Hub
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main')
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Cache Docker layers
-        uses: actions/cache@v4
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-docker-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-docker-
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-docker-
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -123,5 +114,5 @@ jobs:
           context: .
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/servas:buildcache,mode=max
+          # cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-to: type=local,dest=/tmp/.buildx-cache
