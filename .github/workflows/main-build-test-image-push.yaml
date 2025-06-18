@@ -41,7 +41,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-
 
-      - name: Install dependencies using compose
+      - name: Install dependencies using composer
         run: composer install
         env:
           COMPOSER_NO_INTERACTION: 1
