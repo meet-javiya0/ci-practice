@@ -1,4 +1,4 @@
-# Servas
+# Servas 
 
 A self-hosted bookmark management tool.  
 Servas is based on Laravel and Inertia.js and uses Tailwind CSS and Svelte for the frontend.
